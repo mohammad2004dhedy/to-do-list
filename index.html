@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MD / to do list</title>
+    <link rel="website icon" type="jpg" href="images/metaDirectory.jpg" />
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>To Do List</h1>
+      <ul class="pagination">
+        <li class="active showTasks">list</li>
+        <li class="showAnalysis">analysis</li>
+      </ul>
+      <div class="content">
+        <div class="todoList">
+          <div class="addTask">
+            <i class="fa-regular fa-square-plus"></i>
+            <span>New Task</span>
+          </div>
+          <div class="item done">
+            <p>finish my homeworks</p>
+            <div class="actions">
+              <button type="button" class="finished">finished</button>
+              <button type="button" class="editToDo">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+              <button type="button" class="deleteItem">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            </div>
+            <div class="timeLeft">3d 1h 25m</div>
+          </div>
+          <div class="item">
+            <p>finish my homeworks</p>
+            <div class="actions">
+              <button type="button" class="finished">finish</button>
+              <button type="button" class="editToDo">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+              <button type="button" class="deleteItem">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            </div>
+            <div class="timeLeft">3d 1h 25m</div>
+          </div>
+          <div class="item">
+            <p>finish my homeworks</p>
+            <div class="actions">
+              <button type="button" class="finished">finish</button>
+              <button type="button" class="editToDo">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+              <button type="button" class="deleteItem">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            </div>
+            <div class="timeLeft">3d 1h 25m</div>
+          </div>
+          <div class="item done">
+            <p>finish my homeworks</p>
+            <div class="actions">
+              <button type="button" class="finished">finished</button>
+              <button type="button" class="editToDo">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+              <button type="button" class="deleteItem">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            </div>
+            <div class="timeLeft">3d 1h 25m</div>
+          </div>
+        </div>
+        <div class="analysis"></div>
+      </div>
+    </div>
+    <div class="addTaskWindow">
+      <div class="container">
+        <div class="content">
+          <i class="fa-solid fa-circle-xmark closeAddTaskWindow"></i>
+          <h3
+            style="text-align: center; color: white; text-transform: capitalize"
+          >
+            add a new task
+          </h3>
+          <textarea placeholder="enter a description"></textarea>
+          <input type="datetime-local" />
+          <button type="button">create</button>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
