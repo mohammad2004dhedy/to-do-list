@@ -184,9 +184,11 @@ body > .container .content.active .todoList {
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
   transition: 400ms;
+  opacity: 0;
 }
 .addTaskWindow.active {
   left: 0;
+  opacity: 1;
 }
 .addTaskWindow .container {
   display: flex;
