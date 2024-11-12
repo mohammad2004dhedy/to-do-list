@@ -97,8 +97,8 @@ body > .container .content .todoList {
   transition: 350ms;
 }
 body > .container .content .todoList .item {
-  padding: 10px 16px;
-  min-height: 80px;
+  padding: 10px 16px 25px;
+  min-height: 100px;
   background: var(--dark-color);
   color: var(--white-color);
   display: flex;
@@ -152,6 +152,18 @@ body > .container .content .todoList .item .actions .deleteItem {
 }
 body > .container .content .todoList .item.done .actions .editToDo {
   display: none;
+}
+@media (max-width: 767px) {
+  body > .container .content .todoList .item > p {
+    font-size: 15px;
+  }
+  body > .container .content .todoList .item .actions .editToDo,
+  body > .container .content .todoList .item .actions .deleteItem {
+    font-size: 20px;
+  }
+  body > .container .content .todoList .item .actions .finished {
+    padding: 8px;
+  }
 }
 
 /* analysis start */
@@ -211,11 +223,11 @@ body > .container .content.active .todoList {
   gap: 10px;
   opacity: 0;
   transition: 400ms;
-  transition-delay:300ms;
+  transition-delay: 300ms;
 }
-.addTaskWindow.active .container .content{
-    opacity:1;
-    left: 0;
+.addTaskWindow.active .container .content {
+  opacity: 1;
+  left: 0;
 }
 .addTaskWindow .container .content .closeAddTaskWindow {
   position: absolute;
