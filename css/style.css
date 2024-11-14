@@ -122,6 +122,7 @@ body.blured .sideBar h2 {
   width: 100%;
   display: flex;
   justify-content: center;
+  transition:600ms;
   align-items: center;
 }
 .MetaLogo img {
