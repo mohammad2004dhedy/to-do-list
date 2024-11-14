@@ -18,8 +18,16 @@ body {
   position: relative;
   font-family: sans-serif;
 }
+
 body.blured {
   overflow: hidden;
+}
+::-webkit-scrollbar {
+  width:5px;
+}
+::-webkit-scrollbar-thumb {
+  background-color:blueviolet;
+  outline: none;
 }
 .container {
   padding: 15px;
