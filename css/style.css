@@ -18,12 +18,19 @@ body {
   position: relative;
   font-family: sans-serif;
 }
+body.blured{
+  overflow: hidden;
+}
 .container {
-  min-height: 100vh;
   padding: 15px;
   width: 100%;
   margin: auto;
   overflow: hidden;
+  position: relative;
+  transition: 600ms;
+}
+body > .container {
+  min-height: 100vh;
 }
 @media (min-width: 768px) {
   .container {
@@ -39,6 +46,101 @@ body {
   .container {
     width: 1170px;
   }
+}
+/* sideBar start */
+.sideBar {
+  position: fixed;
+  top: -101%;
+  left: 0;
+  width: 100%;
+  padding-top: 15px;
+  z-index: 10;
+  border-bottom-left-radius: 40%;
+  border-bottom-right-radius: 40%;
+  background: #ffffff3a;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: solid 3px white;
+  transition: 600ms;
+  transition-delay: 300ms;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  box-shadow: 0 0 20px black;
+}
+body.blured .sideBar {
+  top: 0;
+  opacity: 1;
+}
+.sideBar h2 {
+  color: var(--dark-color);
+  text-transform: uppercase;
+  letter-spacing: 50px;
+  transition: 400ms 700ms;
+  filter: blur(5px);
+  white-space: nowrap; 
+}
+body.blured .sideBar h2 {
+  letter-spacing: 2px;
+  filter: blur(0);
+}
+.sideBar .social{
+  position: relative;
+}
+.sideBar .closeMenu{
+  position: absolute;
+  left: 50%;
+  transform:translateX(-50%);
+  bottom:-40px;
+  font-size:30px;
+  color: white;
+}
+.sideBar .social li a {
+  color: var(--dark-color);
+}
+.sideBar .social li a:hover {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.758), 0 0 20px white;
+}
+.MetaLogo{
+  position:fixed;
+  z-index:9;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.MetaLogo img{
+width:90%;
+max-width:600px;
+transition: 600ms;
+transition-delay: 300ms;
+opacity: 0;
+position:relative;
+left:-100%;
+top: 50px;
+}
+body.blured .MetaLogo img{
+left: 0;
+opacity:1;
+}
+/* sideBar end */
+body.blured > .container {
+  filter: blur(7px);
+  pointer-events: none;
+}
+body > .container .openMenu {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
 }
 body > .container h1 {
   text-align: center;
@@ -92,7 +194,7 @@ body > .container .content .todoList {
   opacity: 1;
   transition: 350ms;
 }
-body > .container .content .todoList .todoListContent{
+body > .container .content .todoList .todoListContent {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -201,6 +303,10 @@ body > .container .content.active .todoList {
   transition: 400ms;
   opacity: 0;
 }
+body.blured .addTaskWindow {
+  filter: blur(7px);
+  pointer-events: none;
+}
 .addTaskWindow.active {
   left: 0;
   opacity: 1;
@@ -253,6 +359,7 @@ body > .container .content.active .todoList {
   border: none;
   outline: none;
   cursor: pointer;
+  width: 100%;
 }
 .addTaskWindow .container .content button[type="button"] {
   width: 60%;
@@ -265,3 +372,79 @@ body > .container .content.active .todoList {
   cursor: pointer;
 }
 /* add Task Window end */
+/* footer start */
+footer {
+  background: var(--dark-color);
+  position: relative;
+  transition: 400ms;
+}
+body.blured footer {
+  filter: blur(7px);
+  pointer-events: none;
+}
+footer::before {
+  content: "";
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  top: -49.1px;
+  left: 0;
+  background: linear-gradient(to top, var(--dark-color), transparent);
+}
+footer .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+  text-align: center;
+}
+footer .container img {
+  width: 130px;
+}
+footer .container h2 {
+  color: white;
+  font-size: 30px;
+  margin-top: 10px;
+  letter-spacing: 1.5px;
+}
+footer .container .subText {
+  color: #f3f3f370;
+  margin-top: 5px;
+}
+.social {
+  list-style: none;
+  display: flex;
+  gap: 22px;
+  margin: 30px 0;
+}
+
+.social li a {
+  text-decoration: none;
+  color: white;
+  font-size: 30px;
+  transition: 300ms;
+  position: relative;
+  top: 0;
+  display: block;
+}
+.social li a:hover {
+  top: -8px;
+  text-shadow: 0 0 5px white, 0 0 10px var(--bg-color-pink);
+  transform: scale(1.3);
+}
+footer .container .copyRights {
+  color: #f3f3f370;
+}
+footer .container .copyRights span {
+  color: var(--bg-color-pink);
+}
+@media (max-width: 767px) {
+  footer .container h2 {
+    font-size: 23px;
+  }
+  footer .container .subText {
+    font-size: 15px;
+  }
+}
+/* footer end */

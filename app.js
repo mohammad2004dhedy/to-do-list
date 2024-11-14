@@ -27,7 +27,17 @@ let idCounter =
   localStorage.getItem("ToDoIdCounter") !== null
     ? Number(localStorage.getItem("ToDoIdCounter"))
     : 0;
-
+// social menu start
+let openMenuBtn = document.querySelector(".openMenu");
+let closeMenuBtn = document.querySelector(".closeMenu");
+let body = document.querySelector("body");
+openMenuBtn.addEventListener("click", () => {
+  body.classList.add("blured");
+});
+closeMenuBtn.addEventListener("click", () => {
+  body.classList.remove("blured");
+});
+// social menu end
 // pagination start
 let showTasks = document.querySelector(".container .pagination .showTasks");
 let showAnalysis = document.querySelector(
