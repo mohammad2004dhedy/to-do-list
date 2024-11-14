@@ -63,9 +63,11 @@ let addTaskBtn = document.querySelector(
 );
 addTaskBtn.addEventListener("click", () => {
   addTaskWindow.classList.add("active");
+  body.style.overflow="hidden";
 });
 closeAddTaskWindow.addEventListener("click", () => {
   addTaskWindow.classList.remove("active");
+  body.style.overflow="auto";
 });
 // add task window end
 // ================= add data =============

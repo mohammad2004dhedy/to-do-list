@@ -18,7 +18,7 @@ body {
   position: relative;
   font-family: sans-serif;
 }
-body.blured{
+body.blured {
   overflow: hidden;
 }
 .container {
@@ -81,22 +81,23 @@ body.blured .sideBar {
   letter-spacing: 50px;
   transition: 400ms 700ms;
   filter: blur(5px);
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 body.blured .sideBar h2 {
   letter-spacing: 2px;
   filter: blur(0);
 }
-.sideBar .social{
+.sideBar .social {
   position: relative;
 }
-.sideBar .closeMenu{
+.sideBar .closeMenu {
   position: absolute;
   left: 50%;
-  transform:translateX(-50%);
-  bottom:-40px;
-  font-size:30px;
+  transform: translateX(-50%);
+  bottom: -40px;
+  font-size: 30px;
   color: white;
+  cursor: pointer;
 }
 .sideBar .social li a {
   color: var(--dark-color);
@@ -104,30 +105,33 @@ body.blured .sideBar h2 {
 .sideBar .social li a:hover {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.758), 0 0 20px white;
 }
-.MetaLogo{
-  position:fixed;
-  z-index:9;
-  top:50%;
+.MetaLogo {
+  position: fixed;
+  z-index: 9;
+  top: -100%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.MetaLogo img{
-width:90%;
-max-width:600px;
-transition: 600ms;
-transition-delay: 300ms;
-opacity: 0;
-position:relative;
-left:-100%;
-top: 50px;
+.MetaLogo img {
+  width: 90%;
+  max-width: 600px;
+  transition: 600ms;
+  transition-delay: 300ms;
+  opacity: 0;
+  position: relative;
+  left: -100%;
+  top: 50px;
 }
-body.blured .MetaLogo img{
-left: 0;
-opacity:1;
+body.blured .MetaLogo {
+  top: 50%;
+}
+body.blured .MetaLogo img {
+  left: 0;
+  opacity: 1;
 }
 /* sideBar end */
 body.blured > .container {
@@ -303,10 +307,6 @@ body > .container .content.active .todoList {
   transition: 400ms;
   opacity: 0;
 }
-body.blured .addTaskWindow {
-  filter: blur(7px);
-  pointer-events: none;
-}
 .addTaskWindow.active {
   left: 0;
   opacity: 1;
@@ -315,6 +315,7 @@ body.blured .addTaskWindow {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 }
 .addTaskWindow .container .content {
   width: 60%;
@@ -359,7 +360,6 @@ body.blured .addTaskWindow {
   border: none;
   outline: none;
   cursor: pointer;
-  width: 100%;
 }
 .addTaskWindow .container .content button[type="button"] {
   width: 60%;
