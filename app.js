@@ -15,6 +15,21 @@ the dead line or the the description
 
 6- onclick on analysis the active class will be added to the content and if the user click list btn the active class will be removed from the content
  */
+// site music control start
+let siteMusic = document.querySelector(".siteMusic");
+let isPlaying = false;
+const audio = new Audio("audio/relax.mp3");
+audio.volume = 0.05;
+siteMusic.addEventListener("click", () => {
+  if (isPlaying == true) {
+    isPlaying = false;
+    audio.pause();
+  } else {
+    isPlaying = true;
+    audio.play();
+  }
+});
+// site music control end
 let mood = "create";
 let tasks = JSON.parse(localStorage.getItem("ToDoListTasksArray")) || [];
 let tempTaskObject = {
@@ -96,23 +111,33 @@ function createEditTasks(itemTask) {
 
     taskDeadLine.value = formattedDate;
   }
-  createTaskBtn.addEventListener("click", () => {
+  createTaskBtn.onclick = () => {
     let taskDescription = document.querySelector(
       ".addTaskWindow .container .content textarea"
-    ).value;
+    );
     let taskDeadLine = document.querySelector(
       ".addTaskWindow .container .content input"
-    ).value;
-    if (!taskDescription || !taskDeadLine) {
-      alert("Please fill in both fields.");
+    );
+    if (taskDeadLine.value.trim() === "" || taskDeadLine.value.trim() === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "عبي مشان الله",
+        text: "عبي الخيارات كلهن مشان الله مش فاضيلك",
+        confirmButtonText: "ماشي؟",
+      });
       return;
     }
     if (mood === "create") {
       tasks.push({
         id: idCounter++,
-        description: taskDescription,
-        deadline: new Date(taskDeadLine),
+        description: taskDescription.value,
+        deadline: new Date(taskDeadLine.value),
         isCompleted: false,
+      });
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "item has been added successfully.",
       });
       displayTasks();
       analysisChart();
@@ -121,13 +146,18 @@ function createEditTasks(itemTask) {
         if (Dtask.id === itemTask.id) {
           return {
             ...Dtask,
-            description: taskDescription,
-            deadline: new Date(taskDeadLine),
+            description: taskDescription.value,
+            deadline: new Date(taskDeadLine.value),
           };
         }
         return Dtask;
       });
       displayTasks();
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "item has been updated successfully.",
+      });
     }
     closeAddTaskWindow.click();
     document.querySelector(
@@ -135,7 +165,7 @@ function createEditTasks(itemTask) {
     ).value = "";
     document.querySelector(".addTaskWindow .container .content input").value =
       "";
-  });
+  };
 
   displayTasks();
   localStorage.setItem("ToDoListTasksArray", JSON.stringify(tasks));
@@ -153,6 +183,7 @@ function displayTasks() {
     let finishedByTime = false;
     let taskDiv = document.createElement("div");
     taskDiv.classList.add("item");
+    taskDiv.setAttribute("data-aos", "fade-down");
     // إنشاء عناصر المهمة
     let pDescription = document.createElement("p");
     pDescription.innerHTML = task.description;
@@ -223,14 +254,30 @@ function displayTasks() {
       }
     };
     actions.querySelector(".deleteItem").onclick = () => {
-      alert("are you sure you want to delete this task ? ");
-      tasks = tasks.filter((Dtask) => {
-        return Dtask.id != task.id;
+      Swal.fire({
+        title: "Are you sure you want to delete this task?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, i am sure!",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          tasks = tasks.filter((Dtask) => {
+            return Dtask.id != task.id;
+          });
+          localStorage.setItem("ToDoListTasksArray", JSON.stringify(tasks));
+          displayTasks();
+          analysisChart();
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "item has been deleted successfully.",
+          });
+        }
       });
-      localStorage.setItem("ToDoListTasksArray", JSON.stringify(tasks));
-      displayTasks();
-      analysisChart();
     };
+
     actions.querySelector(".editToDo").onclick = () => {
       mood = "edit";
       createEditTasks(task);

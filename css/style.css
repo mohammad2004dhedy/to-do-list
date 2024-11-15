@@ -18,7 +18,14 @@ body {
   position: relative;
   font-family: sans-serif;
 }
-
+.siteMusic {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+}
 body.blured {
   overflow: hidden;
 }
