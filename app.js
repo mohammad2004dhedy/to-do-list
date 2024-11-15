@@ -15,12 +15,13 @@ the dead line or the the description
 
 6- onclick on analysis the active class will be added to the content and if the user click list btn the active class will be removed from the content
  */
-
+let mood = "create";
 let tasks = JSON.parse(localStorage.getItem("ToDoListTasksArray")) || [];
 let tempTaskObject = {
   id: 0,
   description: " ",
   deadline: "",
+  isCompleted: true,
 };
 displayTasks();
 let idCounter =
@@ -59,47 +60,87 @@ showAnalysis.addEventListener("click", () => {
 let addTaskWindow = document.querySelector(".addTaskWindow");
 let closeAddTaskWindow = document.querySelector(".closeAddTaskWindow");
 let addTaskBtn = document.querySelector(
-  "body> .container .content .todoList .addTask"
+  "body> .container .content .todoList .addTask i"
 );
 addTaskBtn.addEventListener("click", () => {
-  addTaskWindow.classList.add("active");
-  body.style.overflow="hidden";
+  body.style.overflow = "hidden";
+  document.querySelector(
+    ".addTaskWindow .container .content button"
+  ).textContent = "create";
+  mood = "create";
+  createEditTasks();
 });
 closeAddTaskWindow.addEventListener("click", () => {
   addTaskWindow.classList.remove("active");
-  body.style.overflow="auto";
+  body.style.overflow = "auto";
 });
 // add task window end
 // ================= add data =============
-let createTaskBtn = document.querySelector(
-  ".addTaskWindow .container .content button"
-);
 
-createTaskBtn.addEventListener("click", () => {
-  let taskDescription = document.querySelector(
-    ".addTaskWindow .container .content textarea"
-  ).value;
-  let taskDeadLine = document.querySelector(
-    ".addTaskWindow .container .content input"
-  ).value;
-  if (!taskDescription || !taskDeadLine) {
-    alert("Please fill in both fields.");
-    return; // إيقاف تنفيذ الكود إذا كانت الحقول فارغة
+function createEditTasks(itemTask) {
+  let createTaskBtn = document.querySelector(
+    ".addTaskWindow .container .content button"
+  );
+  addTaskWindow.classList.add("active");
+  if (mood === "edit") {
+    createTaskBtn.textContent = "update";
+    let taskDescription = document.querySelector(
+      ".addTaskWindow .container .content textarea"
+    );
+    let taskDeadLine = document.querySelector(
+      ".addTaskWindow .container .content input"
+    );
+    taskDescription.value = itemTask.description;
+    const deadlineDate = new Date(itemTask.deadline);
+    const formattedDate = deadlineDate.toISOString().slice(0, 16); // صيغة YYYY-MM-DDTHH:MM
+
+    taskDeadLine.value = formattedDate;
   }
-  tasks.push({
-    id: idCounter++,
-    description: taskDescription,
-    deadline: new Date(taskDeadLine),
+  createTaskBtn.addEventListener("click", () => {
+    let taskDescription = document.querySelector(
+      ".addTaskWindow .container .content textarea"
+    ).value;
+    let taskDeadLine = document.querySelector(
+      ".addTaskWindow .container .content input"
+    ).value;
+    if (!taskDescription || !taskDeadLine) {
+      alert("Please fill in both fields.");
+      return;
+    }
+    if (mood === "create") {
+      tasks.push({
+        id: idCounter++,
+        description: taskDescription,
+        deadline: new Date(taskDeadLine),
+        isCompleted: false,
+      });
+      displayTasks();
+      analysisChart();
+    } else if (mood === "edit") {
+      tasks = tasks.map((Dtask) => {
+        if (Dtask.id === itemTask.id) {
+          return {
+            ...Dtask,
+            description: taskDescription,
+            deadline: new Date(taskDeadLine),
+          };
+        }
+        return Dtask;
+      });
+      displayTasks();
+    }
+    closeAddTaskWindow.click();
+    document.querySelector(
+      ".addTaskWindow .container .content textarea"
+    ).value = "";
+    document.querySelector(".addTaskWindow .container .content input").value =
+      "";
   });
-  document.querySelector(".addTaskWindow .container .content textarea").value =
-    "";
-  document.querySelector(".addTaskWindow .container .content input").value = "";
 
   displayTasks();
-  closeAddTaskWindow.click();
   localStorage.setItem("ToDoListTasksArray", JSON.stringify(tasks));
   localStorage.setItem("ToDoIdCounter", JSON.stringify(idCounter));
-});
+}
 
 function displayTasks() {
   let tasksContainer = document.querySelector(
@@ -130,7 +171,7 @@ function displayTasks() {
     let days, hours, minutes, seconds;
     let timeLeftDiv = document.createElement("div");
     timeLeftDiv.classList.add("timeLeft");
-    timeLeftDiv.textContent = "calculating time ...";
+    timeLeftDiv.textContent = "00 d 00 h 00 m 00 s";
     // تعريف العدّاد
     let timeLeftInterval;
     function startCountdown() {
@@ -148,6 +189,8 @@ function displayTasks() {
           seconds = Math.floor(timeLeft / 1000);
           timeLeftDiv.textContent = `${days} d ${hours} h ${minutes} m ${seconds} s`;
         } else {
+          task.isCompleted = true;
+          localStorage.setItem("ToDoListTasksArray", JSON.stringify(tasks));
           finishedByTime = true;
           timeLeftDiv.textContent = "time end";
           clearInterval(timeLeftInterval); // إيقاف التحديث عند انتهاء الوقت
@@ -157,13 +200,26 @@ function displayTasks() {
       }, 1000);
     }
     startCountdown();
+    if (task.isCompleted) {
+      taskDiv.classList.add("done");
+      clearInterval(timeLeftInterval);
+    }
 
     actions.querySelector(".finished").onclick = () => {
       if (finishedByTime == true) {
+        alert("you cant unfinished this task");
       } else {
         taskDiv.classList.toggle("done");
-        if (taskDiv.classList.contains("done")) clearInterval(timeLeftInterval);
-        else startCountdown();
+        if (taskDiv.classList.contains("done")) {
+          clearInterval(timeLeftInterval);
+          task.isCompleted = true;
+          localStorage.setItem("ToDoListTasksArray", JSON.stringify(tasks));
+        } else {
+          task.isCompleted = false;
+          localStorage.setItem("ToDoListTasksArray", JSON.stringify(tasks));
+          startCountdown();
+        }
+        analysisChart();
       }
     };
     actions.querySelector(".deleteItem").onclick = () => {
@@ -173,35 +229,63 @@ function displayTasks() {
       });
       localStorage.setItem("ToDoListTasksArray", JSON.stringify(tasks));
       displayTasks();
+      analysisChart();
     };
     actions.querySelector(".editToDo").onclick = () => {
-      document.querySelector(".addTaskWindow").classList.add("active");
-      let taskDescription = document.querySelector(
-        ".addTaskWindow .container .content textarea"
-      );
-      let taskDeadLine = document.querySelector(
-        ".addTaskWindow .container .content input"
-      );
-      taskDescription.value = task.description;
-      if (!taskDescription || !taskDeadLine) {
-        alert("Please fill in both fields.");
-        return; // إيقاف تنفيذ الكود إذا كانت الحقول فارغة
-      }
-      tasks = tasks.map((Dtask) => {
-        if (Dtask.id == task.id) {
-          return {
-            ...Dtask,
-            description: taskDescription.value,
-            deadline: new Date(taskDeadLine.value),
-          };
-        } else return Dtask;
-      });
-      localStorage.setItem("ToDoListTasksArray", JSON.stringify(tasks));
-      displayTasks();
+      mood = "edit";
+      createEditTasks(task);
     };
+
     taskDiv.append(pDescription);
     taskDiv.append(actions);
     taskDiv.append(timeLeftDiv);
     tasksContainer.insertAdjacentElement("afterbegin", taskDiv);
   });
 }
+
+// analyzis start
+let tasksChart; // تعريف متغير الرسم البياني في نطاق عام
+
+function analysisChart() {
+  let numOFtasks = tasks.length;
+  let completedTasks = tasks.filter((task) => {
+    return task.isCompleted == true;
+  }).length;
+  let NONcompletedTasks = numOFtasks - completedTasks;
+
+  const ctx = document.getElementById("MyTasks").getContext("2d");
+
+  // تدمير الرسم البياني إذا كان موجودًا
+  if (tasksChart) {
+    tasksChart.destroy();
+  }
+
+  // إنشاء الرسم البياني الجديد
+  tasksChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["not completed", "completed"],
+      datasets: [
+        {
+          label: "Tasks",
+          data: [NONcompletedTasks, completedTasks],
+          backgroundColor: ["#4CAF50", "#FF5733"],
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        tooltip: {
+          enabled: true,
+        },
+      },
+    },
+  });
+}
+
+analysisChart();
+// analyzis end

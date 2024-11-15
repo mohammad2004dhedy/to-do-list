@@ -23,10 +23,10 @@ body.blured {
   overflow: hidden;
 }
 ::-webkit-scrollbar {
-  width:5px;
+  width: 5px;
 }
 ::-webkit-scrollbar-thumb {
-  background-color:blueviolet;
+  background-color: blueviolet;
   outline: none;
 }
 .container {
@@ -122,7 +122,7 @@ body.blured .sideBar h2 {
   width: 100%;
   display: flex;
   justify-content: center;
-  transition:600ms;
+  transition: 600ms;
   align-items: center;
 }
 .MetaLogo img {
@@ -198,6 +198,7 @@ body > .container .addTask i {
 }
 body > .container .content {
   position: relative;
+  min-height: 100vh;
 }
 body > .container .content .todoList {
   position: relative;
@@ -238,6 +239,7 @@ body > .container .content .todoList .item.done .timeLeft {
 }
 body > .container .content .todoList .item > p {
   font-size: 20px;
+  word-break: break-all;
 }
 body > .container .content .todoList .item.done > p {
   text-decoration: line-through;
@@ -293,6 +295,17 @@ body > .container .content .analysis {
   right: -150%;
   transition: 300ms;
   opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+body > .container .content .analysis canvas {
+  width: 100%;
+  max-width: 500px;
+  min-height: 100px;
+  max-height: 400px;
 }
 body > .container .content.active .analysis {
   right: 0;
@@ -386,6 +399,7 @@ footer {
   background: var(--dark-color);
   position: relative;
   transition: 400ms;
+  margin-top: 100px;
 }
 body.blured footer {
   filter: blur(7px);

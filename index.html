@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <meta name="theme-color" content="#e385ec">
+    <meta name="theme-color" content="#e385ec" />
     <title>MD / to do list</title>
     <link rel="website icon" type="jpg" href="images/metaDirectory.jpg" />
     <link rel="stylesheet" href="css/all.min.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <section class="sideBar">
@@ -57,7 +58,9 @@
           </div>
           <div class="todoListContent"></div>
         </div>
-        <div class="analysis"></div>
+        <div class="analysis">
+          <canvas id="MyTasks"></canvas>
+        </div>
       </div>
     </div>
     <div class="addTaskWindow">
@@ -70,7 +73,7 @@
             add a new task
           </h3>
           <textarea required placeholder="enter a description"></textarea>
-          <input required type="datetime-local"  />
+          <input required type="datetime-local" />
           <button type="button">create</button>
         </div>
       </div>
